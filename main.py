@@ -56,13 +56,21 @@ def select():
 	except Exception as e:
 		return str(e)
 
+@app.route('/count')
+def count():
+	con = sqlite3.connect('login.db')
+	cur = con.cursor()
+	cur.execute("SELECT * FROM Users")
+	count = len(cur.fetchall())
+	return str(count)
+
 @app.route('/table')
 def table():
 	con = sqlite3.connect('login.db')
 	cur = con.cursor()
 	cur.execute("SELECT * FROM Users")
 	rows = cur.fetchall()
-	return render_template('table.html', rows=rows)		
+	return render_template('table.html', rows=rows)
 
 @app.route('/add', methods=['POST'])
 def add():
